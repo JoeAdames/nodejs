@@ -11,6 +11,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(adminRoutes);
 app.use(shopRoutes);
 
+app.use((req, res, next) => {
+    res.status(404).send(`<h1>Page Not Found`);
+}); //Catch all middleware 404
+
 
 
 app.listen(3000);
