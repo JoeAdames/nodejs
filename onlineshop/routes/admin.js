@@ -1,15 +1,26 @@
+const path = require('path');
+
 const express = require('express');
+
+const rootDir = require('../util/path');
 
 const router = express.Router();
 
+const products = [];
+
+
+// /admin/add-product => GET
 router.get('/add-product', (req,res,next) => {
-    console.log('this middleware will add a product');
-    res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">send</button></form>')
+     res.sendFile(path.join(rootDir, 'views', 'add-product.html'))
 });
 
-router.post('/product', (req,res,next) => {
-    console.log(req.body);
+// /admin/add-product => POS
+router.post('/add-product', (req,res,next) => {
+    products.push({title: req.body.title});
     res.redirect('/');
 });
 
-module.exports = router;
+// module.exports = router; since were exporting more than one item thing we export differently
+
+exports.routes = router;
+exports.products = products;
